@@ -1,15 +1,18 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import dynamic from 'next/dynamic'
 import { ArrowLeft } from "lucide-react"
 import { useAuth } from "@/components/auth-provider"
 import AnimatedButton from "@/components/animated-button"
-import PageTransition from "@/components/page-transition"
+
+// Dynamically import client-side components
+const PageTransition = dynamic(() => import('@/components/page-transition'), { ssr: false });
+const ClientParticles = dynamic(() => import('@/components/ClientParticles'), { ssr: false });
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -42,28 +45,8 @@ export default function LoginPage() {
       <div className="min-h-screen bg-dark-bg flex items-center justify-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-electric-blue/10 via-dark-bg to-neon-magenta/10" />
 
-        {/* Animated background particles */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-electric-blue/30 rounded-full"
-              initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-              }}
-              animate={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-              }}
-              transition={{
-                duration: Math.random() * 10 + 10,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "linear",
-              }}
-            />
-          ))}
-        </div>
+        {/* Use the new client-side particles component */}
+        <ClientParticles />
 
         {/* Aurora effect */}
         <div className="absolute inset-0 opacity-30">
@@ -115,7 +98,6 @@ export default function LoginPage() {
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             >
               DARKWING's
-              {/* Animated underline */}
               <motion.div
                 className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-electric-blue to-transparent"
                 initial={{ width: 0 }}
@@ -144,7 +126,6 @@ export default function LoginPage() {
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
             }}
           >
-            {/* Animated border glow */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-electric-blue/20 via-neon-magenta/20 to-electric-blue/20 blur-sm -z-10" />
 
             <div className="space-y-6">
